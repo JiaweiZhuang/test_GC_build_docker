@@ -1,0 +1,14 @@
+sudo: required
+language: c
+services:
+    - docker
+
+before_install:
+- docker pull zhuangjw/docker_gc
+
+env:
+- CODEDIR="$(pwd)/Code_12.0.0"
+
+script:
+- git clone https://github.com/geoschem/geos-chem.git $CODEDIR
+- docker run -it --rm -v $CODEDIR:/root/workdir zhuangjw/docker_gc /bin/bash -c "cd /root/workdir && make MET=geosfp GRID=4x5"
